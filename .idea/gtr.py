@@ -54,7 +54,7 @@ def create_doc_template(path_doc_file, num_rows, num_columns):
 def make_QR_doc_list(object_excel, object_doc, list_num_col_for_QR: list,
                      list_num_col_QR_descr: list, path_doc: str):
 
-    doc_QR_document = Document("Template.docx")
+    doc_QR_document = Document(path_doc)
 
 
     section = doc_QR_document.sections[0]
@@ -62,10 +62,6 @@ def make_QR_doc_list(object_excel, object_doc, list_num_col_for_QR: list,
     table._tbl.remove(table.rows[0]._tr)
     column_num_doc_table = 0
     row_cells = table.add_row().cells
-
-
-
-
 
     for row_num_doc_table in range(1, 25): #object_excel.rows + 1): FIXME
         print(row_num_doc_table) # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -82,7 +78,7 @@ def make_QR_doc_list(object_excel, object_doc, list_num_col_for_QR: list,
 
     os.remove(PIC_FILE_NAME)
 
-    doc_QR_document.save("test_doc.docx")
+    doc_QR_document.save(object_doc)
 
 
 def get_string_from_excel(excel_file: excel.Excel, num_row: int, list_num_col: list):
@@ -98,27 +94,12 @@ def make_img_QR(excel_file, num_row, list_num_col_for_QR):
     img.save(PIC_FILE_NAME)
 
 
-# main
-ex = excel.Excel(path_excel_file)
-make_QR_doc_list(ex, "!!!!!!!!!!!!!!!!!!!!", list_num_col_for_QR, list_num_col_QR_descr, path_doc)
+def _init_():
+    path_excel_file = input("Open excel file: ")
+    ex = excel.Excel(path_excel_file)
+    path_template_docx_file = input("Open template docx file: (Template.docx by default)")
+    if (path_template_docx_file == ""):
+        path_template_docx_file = "Template.docx"
+    make_QR_doc_list(ex, "result.docx", list_num_col_for_QR, list_num_col_QR_descr, path_template_docx_file)
 
 
-"""
-    table.autofit = False
-    for i in range(3):
-        for cell in table.columns[i].cells:
-            cell.width = TABLE_CELL_WIDTH
-            cell.left_margin = 0
-            cell.top_margin = 0
-            cell.right_margin = 0
-
-
-    sections = doc_QR_document.sections
-    margin = Cm(0.5)
-
-    for section in sections:
-        section.top_margin = margin
-        #section.bottom_margin = margin
-        section.left_margin = margin
-        #section.right_margin = margin
-        """
