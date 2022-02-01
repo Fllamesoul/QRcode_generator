@@ -4,11 +4,12 @@ import imp
 
 try:
     fp, pathname, description = imp.find_module("gtr")
-    _mod = imp.load_module("gtr", fp, pathname, description)
-    _mod._init_()
+    imp.load_module("gtr", fp, pathname, description)
+#    _mod = imp.load_module("gtr", fp, pathname, description)
+#    _mod._херня_()
 except Exception as exc:
     print(exc)
-    input();
+    input()
 
 
     # компилировать в exe командой pyinstaller .idea/Main.py --hidden-import 'gtr'
